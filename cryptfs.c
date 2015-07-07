@@ -3365,7 +3365,9 @@ int cryptfs_enable_default(char *howarg, int allow_reboot)
 int cryptfs_changepw(int crypt_type, const char *currentpw, const char *newpw)
 {
     if (e4crypt_crypto_complete(DATA_MNT_POINT) == 0) {
-        return e4crypt_change_password(DATA_MNT_POINT, crypt_type, newpw);
+        return e4crypt_change_password(DATA_MNT_POINT, crypt_type,
+                    crypt_type == CRYPT_TYPE_DEFAULT ? DEFAULT_PASSWORD
+                                                     : newpw);
     }
 
     struct crypt_mnt_ftr crypt_ftr;
